@@ -151,3 +151,58 @@ for x in list3:
 print(pair)
 fruit,sprouts = zip(* pair)
 print(f'{fruit} {sprouts}')
+
+#using argument unpacking with functon 
+def add (a,b):
+    return a+b
+
+print(add(1,2))
+#print(add([1,2]))
+print(add(*[1,3]))
+
+def doubler(f):
+    def g(x):
+        return 2 * f(x)
+    return g
+
+# takes a fn calculate its double and returns it.
+def p1(x):
+    return x+1
+
+s = doubler(p1)
+print(s(3))
+print(s(-2))
+
+# won't work for functions with 2 argument?
+def p2(x,y):
+    return x+y
+#s2 = doubler(p2)
+#print(s2(3,1))
+
+#using args and kwargs to resolve the issue to sort of create a template function 
+def magic (*args , **kwargs):
+    print('position arguments present are: ' , args)
+    print('keyword argument present are: ' , kwargs)
+
+magic(1,'hello' , None , type = 'c' , power = 'alpha')
+#passing variable number of positional arguments: args
+#passing variable number of keyword arguments: kwargs
+
+def other_way_around(x,y,z):
+    return x+y+z
+
+x_y_list = [4,5]
+z_list = {
+    'z':3
+}
+print(other_way_around(*x_y_list , **z_list))
+# for real , things are insane like add list and dictonary or i should say array and object at a same time python is amazing 
+
+#the final template doubler
+def doubler_recreated(f):
+    def f(*args , **kwargs):
+        return 2 * f(*args , **kwargs)
+
+    return f
+s = doubler_recreated(p2)
+print(s(3,4))
